@@ -1,0 +1,16 @@
+Expense:
+    100
+Purpose:
+    pant
+Expense:
+    200
+Purpose:
+    shirt
+Expense:
+    100
+Purpose:
+    book
+Expense:
+    100
+Purpose:
+    book
