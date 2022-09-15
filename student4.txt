@@ -3,14 +3,22 @@ Expense:
 Purpose:
     pant
 Expense:
-    200
+    100
 Purpose:
-    shirt
+    pant
+Expense:
+    1000
+Purpose:
+    pen
 Expense:
     100
 Purpose:
-    book
+    pant
 Expense:
     100
 Purpose:
-    book
+    pant
+Expense:
+    15
+Purpose:
+    ruti

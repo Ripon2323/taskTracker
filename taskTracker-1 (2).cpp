@@ -315,6 +315,7 @@ int clock(int a,int b,char str[])
 
 
 
+
             for(j=0;j<8;j++)
             {
             Beep(500,900);
@@ -501,11 +502,14 @@ void sort_rems(){
 }
 
 void reminder(){
+    //digitalClock();
 
-    sort_rems();
+   sort_rems();
 
      SYSTEMTIME t;
     GetLocalTime(&t);
+
+
 
     for(i=0;i<n;i++){
     if(tyear==t.wYear && tmon==t.wMonth && tday==t.wDay )
@@ -513,15 +517,20 @@ void reminder(){
 
         if(t_min[i]<10){ t_min[i]=60-(10-t_min[i]); format_hr[i]=format_hr[i]-1; }
           else t_min[i]=t_min[i]-10;
-          digitalClock();
+
             clock(format_hr[i],t_min[i],str[i]);
+
     }
 
     else {
         printf("\nYou have no nTask today"); break;
         }
 
-    }  cout<<"\n\n   Press k to goto Main Menu\n";
+    }
+
+
+
+     cout<<"\n\n   Press k to goto Main Menu\n";
 	if(_getch()=='k')
 		mainmenu();
 
@@ -592,6 +601,130 @@ void deleteall(){
 
 	sort_rems();
 
+
+	vector<string> records;
+	string line;
+	ifstream records_input("student3.txt"); // create a file stream and open the file for reading
+	while (getline(records_input, line)) // read all the lines from the file and store in vector records
+	{
+		records.push_back(line);
+	}
+
+	records_input.close(); // close the file
+	size_t recno = records.size(); // get the number of lines read
+
+	cout << "These are the records" << endl;
+	for (size_t i = 0; i < recno; ++i) // display all the lines read
+	{
+		cout  << records[i] << endl;
+	}
+
+	size_t recno1 = 0;
+	cout << "Which record would you like to delete?" << endl;
+	cin >> recno1; // get the user to pick a record
+
+	if (recno1 < 0 || recno1 >= recno) // validate their choice
+	{
+		cout << "Invalid choice" << endl;
+	}
+	else
+	{
+		cout << "You have chosen to delete record " << recno1 << ": " << records[recno1] << endl;
+		records.erase(records.begin() + recno1); // delete users choice from the records vector
+		recno = records.size(); // the size of the vector will change
+	}
+
+	ofstream records_output("student3.txt"); // create a file stream and open the file for output
+	cout << "These are the records" << endl;
+	for (size_t i = 0; i < recno; ++i) // write out the new records to screen
+	{
+		cout << i << ": " << records[i] << endl;
+		records_output << records[i] << endl;// also overwrite the original file with the new records
+	}
+
+	records_output.close(); // close the file
+	cout << endl << "Goodbye" << endl;
+
+
+
+
+	/* cout<<"All Tasks...\n\n";
+
+	 //all task from file
+	 ifstream file("student3.txt");
+	 while (getline(file, line)) {
+
+        cout<<line<<endl;
+    }
+
+	/*for(i=0;i<n;i++){ tasks_cnt++;
+if(format_hr[i]>12) { tmp_hr=format_hr[i]-12; } else if(format_hr[i]==0) tmp_hr=12; else tmp_hr=format_hr[i];
+    cout<<"Task "<<i+1<<": "<<text[i]<<endl;;
+	cout<<"Time : "<<tmp_hr<<":"<<t_min[i]<<s[i]<<"m"<<endl;
+	cout<<"Date : "<<day[i]<<"-"<<mon[i]<<"-"<<year[i]<<endl; cout<<"\n\n";
+}*/
+	//
+/*	deltsk:
+	    cout<<"\n\n\t\t press k for main menu d for continue delete.."<<endl;
+	if(_getch()=='k'){
+	//Sleep(2000);
+	mainmenu();
+	} else
+	cout<<"\n\n\t\t Press the task number you want to delete.. "<<endl;
+	 scanf("%d",&task_no);
+
+
+
+
+
+	/* if(task_no<=tasks_cnt){
+
+        for(i=0;i<n;i++){
+         if(task_no==(i+1)){
+          for(p=task_no-1;p<n-1;p++){
+
+          format_hr[p]=format_hr[p+1];
+            t_min[p]=t_min[p+1];
+            text[p]=text[p+1];
+
+             day[p]=day[p+1];
+              mon[p]=mon[p+1];
+               year[p]=year[p+1];
+               s[p]=s[p+1];
+
+
+          } n=n-1;
+
+         }
+
+        }
+
+
+	 } else{cout<<"\n\t\tInvalid task number!\n "<<endl; goto deltsk;}*/
+
+
+
+
+
+
+cout<<"\n\n\t\t Task deleted!!!"<<endl;
+	///
+	cout<<"\n\n\t\t press k for main menu "<<endl;
+	if(_getch()=='k'){
+	//Sleep(2000);
+	mainmenu();
+	}
+	else
+		deleteall();
+}
+
+
+/*void deleteall(){
+
+	system("cls"); int tasks_cnt=0, task_no;
+
+	sort_rems();
+
 	 cout<<"All Tasks...\n\n";
 	for(i=0;i<n;i++){ tasks_cnt++;
 if(format_hr[i]>12) { tmp_hr=format_hr[i]-12; } else if(format_hr[i]==0) tmp_hr=12; else tmp_hr=format_hr[i];
@@ -642,19 +775,27 @@ cout<<"\n\n\t\t Task deleted!!!"<<endl;
 	}
 	else
 		deleteall();
-}
+}*/
 
 
 //Add exp
 void addexp(){ system("cls");  SYSTEMTIME t; GetLocalTime(&t);
      ofstream data_in;
+     ofstream data_inp;
     data_in.open("student4.txt",ios::out|ios::app);
+    data_inp.open("student5.csv",ios::out|ios::app);
 //    get_file_lines1();
 
    int arrSize = i;
   int total_d_exp=0;
    for(i=0;exp_m[i]!=NULL;i++){}
                  exp_index=i;
+
+                // printf("")
+
+  cout<<"Please enter a date > or = today in Day-mon-year format:"<<endl;
+    scanf("%d-%d-%d",&tday,&tmon,&tyear);
+
   printf("\nEnter Expense amount\n");
         scanf("%d",&exp_d[exp_index]);
 
@@ -674,6 +815,13 @@ void addexp(){ system("cls");  SYSTEMTIME t; GetLocalTime(&t);
          data_in<<"    "<<exp_d[exp_index]<<endl;
          data_in<<"Purpose:"<<endl;
          data_in<<"    "<<ttxx[exp_index]<<endl;
+
+         //excell input
+         data_inp<<"Date"<<","<<"Expense"<<","<<"Purpose"<<endl;
+         data_inp<<tday<<"-"<<tmon<<"-"<<tyear<<","<<exp_d[exp_index]<<","<<ttxx[exp_index]<<endl;
+         //file<<"Date:"<<tday<<"-"<<tmon<<"-"<<tyear<<"  ";
+         //data_inp<<"Purpose:"<<endl;
+        // data_inp<<"    "<<ttxx[exp_index]<<endl;
 
 
 
@@ -874,7 +1022,7 @@ cout<<" \n\t\t 1.Daily Expense\n\t\t 2.Weekly Expense\n\t\t 3.Monthly Expense\n\
 void mainmenu(){
 
 	system("cls");
-        cout<<" \n\t\t 1. Add Tasks\n\t\t 2. View All Tasks\n\t\t 3. Delete Tasks\n\t\t 4. Add today's expense\n\t\t 5. View total expense\n\t\t  6. Exit\n\t\t 7. Activate Reminder\n\n";
+        cout<<" \n\t\t 1. Add Tasks\n\t\t 2. View All Tasks\n\t\t 3. Delete Tasks\n\t\t 4. Add today's expense\n\t\t 5. View total expense\n\t\t  6. Exit\n\t\t  7.Clock\n\n";
 		cout<<"\t\t Please select from the above: ";
 
 	char ch;
@@ -899,9 +1047,11 @@ void mainmenu(){
 		exit();
 		break;
 
-		case '7':
+		/*case '7':
 		reminder();
-		break;
+		break;*/
+		case '7':
+		digitalClock();
 
 	default :
 		mainmenu();
@@ -919,6 +1069,8 @@ void mail(){
 
 void digitalClock()
 {
+
+
     int gd=DETECT;
     int gm;
     initgraph(&gd,&gm,"C:\\rc\\BGI");
@@ -929,7 +1081,8 @@ void digitalClock()
     char a[100];
 
 
-    rawTime=time(NULL);
+              while(1){
+     rawTime=time(NULL);
     currentTime=localtime(&rawTime);
     strftime(a,100,"%I:%M:%S",currentTime);
 
@@ -937,9 +1090,26 @@ void digitalClock()
     settextstyle(3,HORIZ_DIR,10);
     outtextxy(200,100,a);
 
+    strftime(a,100,"%p",currentTime);
+    settextstyle(3,HORIZ_DIR,2);
+    outtextxy(600,8,a);
+
+    strftime(a,100,"%a,%d %b,%Y",currentTime);
+    settextstyle(3,HORIZ_DIR,5);
+    outtextxy(130,310,a);
+      delay(1000);
+        }
+
+    }
+
+
+
+
+
+
    // getch();
     //closegraph();
-}
+
 
 	int main()
 	{
